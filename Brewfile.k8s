@@ -1,0 +1,12 @@
+# Brewfile.k8s - Kubernetes Tools (Optional)
+# Usage: brew bundle --file=Brewfile.k8s
+
+# Core K8s
+brew "kubernetes-cli"   # kubectl
+brew "helm"
+brew "kustomize"
+
+# K8s utilities
+brew "k9s"              # K8s TUI
+brew "kind"             # K8s in Docker
+brew "velero"           # Backup/restore

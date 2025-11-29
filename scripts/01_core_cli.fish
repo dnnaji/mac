@@ -1,0 +1,48 @@
+#!/usr/bin/env fish
+# 01_core_cli.fish - Install core CLI tools via Brewfile
+# Idempotent: safe to run multiple times
+
+set -l SCRIPT_DIR (dirname (status filename))
+set -l ROOT_DIR (dirname $SCRIPT_DIR)
+
+if not command -q brew
+    echo "ERROR: Homebrew not installed."
+    echo "Run: /bin/bash -c \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)\""
+    exit 1
+end
+
+echo "=== Installing Core CLI Tools ==="
+echo ""
+
+# Update Homebrew
+echo "Updating Homebrew..."
+brew update
+
+# Install from Brewfile
+echo ""
+echo "Installing from Brewfile..."
+brew bundle --file=$ROOT_DIR/Brewfile --no-lock
+
+# Verify key tools
+echo ""
+echo "=== Verification ==="
+set -l required git gh fzf rg fd zoxide bat eza jq yq tmux lazygit starship direnv nvim
+
+set -l missing 0
+for cmd in $required
+    if command -q $cmd
+        echo "✓ $cmd"
+    else
+        echo "✗ $cmd - MISSING"
+        set missing (math $missing + 1)
+    end
+end
+
+echo ""
+if test $missing -eq 0
+    echo "All core CLI tools installed successfully."
+    exit 0
+else
+    echo "WARNING: $missing tool(s) missing. Check Brewfile."
+    exit 1
+end

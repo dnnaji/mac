@@ -1,0 +1,7 @@
+# Brewfile.security - Security Tools (Optional)
+# Usage: brew bundle --file=Brewfile.security
+# NOTE: These require manual system extension approval after install
+
+cask "lulu"          # Outbound firewall (Objective-See)
+cask "malwarebytes"  # Malware scanner
+cask "blockblock"    # Persistence monitor (Objective-See)

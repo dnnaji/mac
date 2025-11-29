@@ -1,0 +1,15 @@
+# npm configuration
+# Add auth tokens and registry configs as needed
+
+# Prefer exact versions
+save-exact=true
+
+# Initialize with MIT license by default
+init-license=MIT
+
+# Default author (customize these)
+# init-author-name=Your Name
+# init-author-email=your.email@example.com
+
+# Use pnpm or yarn? Uncomment:
+# package-manager=pnpm

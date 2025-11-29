@@ -1,0 +1,13 @@
+# Brewfile.cloud - Cloud CLI Tools (Optional)
+# Usage: brew bundle --file=Brewfile.cloud
+
+# AWS
+brew "awscli"
+
+# Azure
+brew "azure-cli"
+
+# Terraform/OpenTofu
+brew "opentofu"
+# brew "terraform"  # Use opentofu instead
+brew "tflint"

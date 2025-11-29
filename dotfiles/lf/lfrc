@@ -1,0 +1,24 @@
+# lf configuration
+# https://github.com/gokcehan/lf
+
+set hidden true
+set icons true
+set number true
+set relativenumber true
+set shell fish
+
+# Use bat for previews
+set previewer bat
+
+# Keybindings
+map <enter> open
+map D delete
+map . set hidden!
+
+# Open files with default application
+cmd open &{{
+    case $(file --mime-type -Lb $f) in
+        text/*) lf -remote "send $id \$$EDITOR \$fx";;
+        *) for f in $fx; do open $f > /dev/null 2> /dev/null & done;;
+    esac
+}}

@@ -1,0 +1,68 @@
+# Starship prompt configuration
+# https://starship.rs/config/
+
+format = """
+$battery\
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_state\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+[character]
+success_symbol = "[❯](white)"
+vicmd_symbol = "[❮](white)"
+error_symbol = "[✗](red)"
+
+[directory]
+read_only = " 🔒"
+style = "blue bold"
+truncation_length = 3
+truncate_to_repo = true
+
+[battery]
+full_symbol = "•"
+charging_symbol = "⇡"
+discharging_symbol = "⇣"
+
+[[battery.display]]
+threshold = 20
+style = "bold red"
+
+[git_branch]
+format = "[$branch]($style)"
+style = "yellow"
+
+[git_status]
+format = """[[(*$conflicted$untracked$modified$staged$renamed$deleted)](bright-black) ($ahead_behind$stashed)]($style)"""
+style = "cyan"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "≡"
+
+[git_state]
+format = '\([$state( $progress_current/$progress_total)]($style)\) '
+style = "bright-black"
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "yellow"
+min_time = 2_000
+
+[nodejs]
+format = "[$symbol($version )]($style)"
+symbol = "⬢ "
+style = "green"
+
+[python]
+format = '[${symbol}${pyenv_prefix}(${version} )(\($virtualenv\) )]($style)'
+symbol = "🐍 "
+style = "yellow"

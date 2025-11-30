@@ -4,32 +4,83 @@
 
 Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agent-runnable.
 
-## Quick Start (New Mac)
+## Workflow (Two Windows)
 
-1. Install prerequisites manually:
-   ```bash
-   # Xcode CLT
-   xcode-select --install
+**Window 1: Claude Code** - orchestrates scripts
+**Window 2: Terminal** - interactive steps
 
-   # Homebrew
-   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+### Phase 0: Prerequisites (Terminal)
 
-   # Fish shell
-   brew install fish
-   sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
-   chsh -s /opt/homebrew/bin/fish
+Run manually before Claude Code can help:
 
-   # Claude Code
-   curl -fsSL https://claude.ai/install.sh | bash
-   ```
+```bash
+# Xcode CLT
+xcode-select --install
 
-2. Clone and run:
-   ```fish
-   git clone <repo> ~/i/mac
-   cd ~/i/mac
-   claude
-   # Then: /mac-bootstrap (Claude Code Slash Command)
-   ```
+# Homebrew
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Fish shell
+brew install fish
+sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
+chsh -s /opt/homebrew/bin/fish
+
+# Claude Code
+npm install -g @anthropic-ai/claude-code
+```
+
+Then clone and start Claude Code:
+
+```fish
+git clone <repo> ~/i/mac
+cd ~/i/mac
+claude
+```
+
+### Phase 1-2: Core Setup (Claude Code)
+
+Run `/mac-bootstrap` - Claude Code handles:
+- `00_discover.fish` - audit current state
+- `01_core_cli.fish` - CLI tools (Brewfile)
+- `02_node_typescript.fish` - fnm + Node
+- `02b_ai_tools.fish` - AI CLIs (Ollama, Gemini, Codex)
+
+### Phase 3: SSH & Git (Terminal)
+
+**Interactive prompts** - run in your terminal window:
+
+```fish
+fish scripts/03_ssh.fish      # Prompts for SSH key details
+fish scripts/03b_git.fish     # Prompts for git config, opens browser for gh auth
+```
+
+Tell Claude Code when done to continue.
+
+### Phase 4-6: Config (Claude Code)
+
+Claude Code continues with:
+- `04_fish_setup.fish` - Fisher + plugins
+- `05_dotfiles.fish` - symlink configs
+- `06_macos_defaults.fish -y` - system prefs (auto-yes)
+- `07_cursor_extensions.fish` - Cursor extensions
+- `08_manual_apps.fish` - Ice menu bar manager
+
+### Optional: GUI Apps (Claude Code)
+
+```fish
+brew bundle --file=Brewfile.casks --no-lock    # Cursor, Ghostty, Raycast, etc.
+brew bundle --file=Brewfile.mas --no-lock      # Mac App Store (requires login)
+brew bundle --file=Brewfile.apps --no-lock     # Signal, Slack, Notion, etc.
+```
+
+### Post-Install: Permissions (System Settings)
+
+Manual approval required after installation:
+- **AeroSpace**: Privacy & Security → Accessibility
+- **Ice**: Privacy & Security → Accessibility
+- **Security tools**: Privacy & Security → Security (system extensions)
+
+Logout/restart for macOS defaults to take effect.
 
 ## Structure
 

@@ -25,10 +25,10 @@ Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agen
 
 2. Clone and run:
    ```fish
-   git clone <repo> ~/i/adr
-   cd ~/i/adr/mac-bootstrap
+   git clone <repo> ~/i/mac
+   cd ~/i/mac
    claude
-   # Then: /mac-bootstrap
+   # Then: /mac-bootstrap (Claude Code Slash Command)
    ```
 
 ## Structure
@@ -38,20 +38,25 @@ scripts/                     # Numbered Fish scripts (00-08)
 ├── 00_discover.fish         # Audit current state (JSON output)
 ├── 01_core_cli.fish         # Install core CLI tools (includes gh)
 ├── 02_node_typescript.fish  # fnm + Node + tsx + ni
+├── 02b_ai_tools.fish        # AI CLI tools (Ollama, Gemini, Codex)
 ├── 03_ssh.fish              # SSH key generation
 ├── 03b_git.fish             # Git config + GitHub CLI auth
 ├── 04_fish_setup.fish       # Fisher + plugins
 ├── 05_dotfiles.fish         # Symlink dotfiles
-├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard
+├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard, Aerospace
 ├── 07_cursor_extensions.fish # Install Cursor extensions
 └── 08_manual_apps.fish      # Apps requiring manual install (Ice)
 
 Brewfile                     # Core CLI tools (always)
 Brewfile.casks               # GUI apps (Cursor, Ghostty, Raycast, etc.)
+Brewfile.apps                # Common apps (Signal, Slack, Notion, etc.)
 Brewfile.cloud               # AWS/Azure/GCP (optional)
 Brewfile.k8s                 # Kubernetes (optional)
 Brewfile.security            # LuLu, Malwarebytes, BlockBlock
-Brewfile.mas                 # Mac App Store apps (Pandan)
+Brewfile.mas                 # Mac App Store apps (Pandan, Amphetamine)
+
+docs/
+└── aerospace-guide.md       # Aerospace + macOS Sequoia usage guide
 
 dotfiles/
 ├── CLAUDE.md                # Claude Code root config
@@ -118,7 +123,7 @@ Tiling window manager (i3-style). After installation:
 1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable AeroSpace
 2. Start: `open -a AeroSpace` or enable "start-at-login" in config
 
-**Keybindings** (alt = option key):
+**Quick Reference** (alt = option key):
 | Key | Action |
 |-----|--------|
 | `alt-h/j/k/l` | Focus window (vim-style) |
@@ -126,9 +131,8 @@ Tiling window manager (i3-style). After installation:
 | `alt-1-5` | Switch workspace |
 | `alt-shift-1-5` | Move to workspace |
 | `alt-f` | Fullscreen |
-| `alt-/` | Toggle horizontal/vertical |
-| `alt-,` | Accordion layout |
-| `alt--/=` | Resize |
+
+**Full guide**: [docs/aerospace-guide.md](docs/aerospace-guide.md) - keybindings, gestures, troubleshooting
 
 ## Password Management
 

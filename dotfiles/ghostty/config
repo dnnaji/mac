@@ -13,7 +13,7 @@ alpha-blending = native
 # =============================================================================
 # WINDOW
 # =============================================================================
-macos-titlebar-style = tabs
+macos-titlebar-style = transparent
 macos-option-as-alt = true
 window-height = 36
 window-width = 160

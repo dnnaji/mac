@@ -44,16 +44,6 @@ function confirm -a prompt_text
     test -z "$response"; or string match -qi 'y*' $response
 end
 
-# =============================================================================
-# Sudo Check (fail-fast)
-# =============================================================================
-# Security section requires sudo - verify it's available before starting
-if not sudo -n true 2>/dev/null
-    echo "Error: sudo credentials required but not cached."
-    echo "Run 'sudo -v' first, then re-run this script."
-    exit 1
-end
-
 echo "=== Configuring macOS Defaults ==="
 echo ""
 
@@ -212,31 +202,54 @@ echo "✓ Screenshots configured (saving to ~/Pictures/Screenshots)"
 # Security (prompted, requires sudo)
 # =============================================================================
 if confirm "Configure Security (firewall, guest account)?"
-    echo "Configuring Security..."
+    set -l security_can_run 1
 
-    # Disable guest account
-    sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+    # Validate sudo availability only when Security is selected
+    if not sudo -n true 2>/dev/null
+        echo "Elevated privileges are required for Security settings."
 
-    # Enable firewall
-    sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+        # In interactive mode, request sudo credentials instead of exiting early
+        if not (set -q _flag_yes; or set -q CI; or set -q NONINTERACTIVE)
+            echo "Requesting sudo credentials..."
+            if not sudo -v
+                echo "Skipping Security because sudo authentication failed."
+                set security_can_run 0
+            end
+        else
+            echo "Skipping Security because sudo credentials are not cached in non-interactive mode."
+            set security_can_run 0
+        end
+    end
 
-    # Enable stealth mode (no response to pings/port scans)
-    sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+    if test $security_can_run -eq 1
+        echo "Configuring Security..."
 
-    # Enable firewall logging
-    sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
+        # Disable guest account
+        sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
 
-    # Disable Safari auto-open "safe" downloads
-    defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+        # Enable firewall
+        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
 
-    # Secure keyboard entry in Terminal (prevents keyloggers)
-    defaults write com.apple.Terminal SecureKeyboardEntry -bool true
+        # Enable stealth mode (no response to pings/port scans)
+        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
 
-    # Require password immediately after sleep/screensaver
-    defaults write com.apple.screensaver askForPassword -int 1
-    defaults write com.apple.screensaver askForPasswordDelay -int 0
+        # Enable firewall logging
+        sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
 
-    echo "✓ Security configured"
+        # Disable Safari auto-open "safe" downloads
+        defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+
+        # Secure keyboard entry in Terminal (prevents keyloggers)
+        defaults write com.apple.Terminal SecureKeyboardEntry -bool true
+
+        # Require password immediately after sleep/screensaver
+        defaults write com.apple.screensaver askForPassword -int 1
+        defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+        echo "✓ Security configured"
+    else
+        echo "· Skipping Security"
+    end
 else
     echo "· Skipping Security"
 end

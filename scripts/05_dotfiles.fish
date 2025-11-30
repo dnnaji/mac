@@ -46,6 +46,12 @@ safe_link $DOTFILES_DIR/npmrc ~/.npmrc
 # Starship prompt config
 safe_link $DOTFILES_DIR/starship.toml ~/.config/starship.toml
 
+# Ghostty terminal config
+safe_link $DOTFILES_DIR/ghostty/config ~/.config/ghostty/config
+
+# Aerospace window manager config
+safe_link $DOTFILES_DIR/aerospace/aerospace.toml ~/.config/aerospace/aerospace.toml
+
 # Fish functions (copy instead of symlink for flexibility)
 echo ""
 echo "=== Fish Functions ==="

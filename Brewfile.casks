@@ -14,7 +14,8 @@ cask "bruno"            # API client (Postman alternative)
 # Productivity
 cask "raycast"          # Launcher (Spotlight replacement)
 cask "arc"              # Browser
-cask "rectangle"        # Window management
+cask "rectangle"        # Window management (snap zones)
+cask "aerospace"        # i3-like tiling window manager
 cask "stats"            # System monitor in menubar
 cask "itsycal"          # Menubar calendar
 cask "maccy"            # Clipboard manager

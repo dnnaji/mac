@@ -4,9 +4,9 @@ This repository contains idempotent Fish shell scripts for bootstrapping a new m
 
 ## Context
 - All scripts are Fish shell (not Bash/Zsh)
-- User: Der
-- Dev directory: ~/i/
-- Primary tools: bun, ni, cursor, ghostty
+- User: Derrick
+- Dev directories: ~/i/ (projects), ~/r/ (reproductions)
+- Primary tools: bun, ni, cursor, ghostty, aerospace
 
 ## Key Constraints
 - Scripts must be idempotent (safe to run multiple times)

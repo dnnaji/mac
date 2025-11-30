@@ -3,6 +3,7 @@
 # These are always installed on a new Mac
 
 tap "homebrew/bundle"
+tap "tobi/tap"
 
 # Shell & Terminal
 brew "fish"
@@ -33,6 +34,11 @@ brew "jless"        # JSON viewer
 
 # Dev utilities
 brew "lazygit"      # Git TUI
+brew "lazydocker"   # Docker TUI
+brew "btop"         # System monitor
+brew "dust"         # Disk usage visualizer
+brew "procs"        # Modern ps replacement
+brew "try"          # Fresh directories for experiments
 brew "direnv"       # Directory-based env vars
 brew "gnupg"        # GPG encryption
 brew "neovim"       # Editor

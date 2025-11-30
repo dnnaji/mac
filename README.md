@@ -78,6 +78,8 @@ dotfiles/
 | `s`            | run start script via ni                     |
 | `lint`         | run lint script via ni                      |
 | `b`            | brew maintenance (update, upgrade, cleanup) |
+| `r [dir]`      | cd to ~/r/ reproductions                    |
+| `cloner <url>` | clone to ~/r/ + open in cursor              |
 
 ## Security Tools
 
@@ -108,3 +110,9 @@ All scripts check before acting:
 - `test -L <path>` for symlinks
 
 Re-running any script is safe.
+
+## Influences
+
+This setup is inspired by:
+- [Omarchy](https://github.com/basecamp/omarchy) v3.2.0 - CLI tools (btop, lazydocker, dust, procs, try), Ghostty/Aerospace configs
+- [antfu/dotfiles](https://github.com/antfu/dotfiles) - Directory structure (`~/i/` projects, `~/r/` reproductions)

@@ -188,6 +188,14 @@ After `brew bundle --file=Brewfile.security`:
 
 These require manual approval due to macOS security restrictions.
 
+## Manual Downloads
+
+Apps not available via Homebrew:
+
+| App | Description | URL |
+|-----|-------------|-----|
+| Wispr Flow | Voice dictation (AI-powered) | https://wisprflow.ai/get-started |
+
 ## Menu Bar
 
 ### Ice

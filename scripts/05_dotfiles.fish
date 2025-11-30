@@ -45,22 +45,22 @@ function safe_link --argument-names src dest
 end
 
 # Claude Code config
-safe_link $DOTFILES_DIR/CLAUDE.md ~/CLAUDE.md
+safe_link "$DOTFILES_DIR/CLAUDE.md" ~/CLAUDE.md
 
 # Git config
-safe_link $DOTFILES_DIR/gitconfig ~/.gitconfig
+safe_link "$DOTFILES_DIR/gitconfig" ~/.gitconfig
 
 # npm config
-safe_link $DOTFILES_DIR/npmrc ~/.npmrc
+safe_link "$DOTFILES_DIR/npmrc" ~/.npmrc
 
 # Starship prompt config
-safe_link $DOTFILES_DIR/starship.toml ~/.config/starship.toml
+safe_link "$DOTFILES_DIR/starship.toml" ~/.config/starship.toml
 
 # Ghostty terminal config
-safe_link $DOTFILES_DIR/ghostty/config ~/.config/ghostty/config
+safe_link "$DOTFILES_DIR/ghostty/config" ~/.config/ghostty/config
 
 # Aerospace window manager config
-safe_link $DOTFILES_DIR/aerospace/aerospace.toml ~/.config/aerospace/aerospace.toml
+safe_link "$DOTFILES_DIR/aerospace/aerospace.toml" ~/.config/aerospace/aerospace.toml
 
 # Fish functions (copy instead of symlink for flexibility)
 echo ""

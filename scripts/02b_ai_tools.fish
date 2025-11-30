@@ -18,7 +18,7 @@ end
 
 # Ollama (local LLM runner)
 if not set -q skip_brew
-    if brew list --cask ollama &>/dev/null
+    if brew list --cask ollama >/dev/null 2>&1
         echo "· Ollama already installed"
     else
         echo "Installing Ollama..."

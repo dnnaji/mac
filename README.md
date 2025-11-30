@@ -36,9 +36,10 @@ Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agen
 ```
 scripts/                     # Numbered Fish scripts (00-07)
 ├── 00_discover.fish         # Audit current state (JSON output)
-├── 01_core_cli.fish         # Install core CLI tools
+├── 01_core_cli.fish         # Install core CLI tools (includes gh)
 ├── 02_node_typescript.fish  # fnm + Node + tsx + ni
 ├── 03_ssh.fish              # SSH key generation
+├── 03b_git.fish             # Git config + GitHub CLI auth
 ├── 04_fish_setup.fish       # Fisher + plugins
 ├── 05_dotfiles.fish         # Symlink dotfiles
 ├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard

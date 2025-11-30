@@ -1,0 +1,17 @@
+# Brewfile.apps - Common GUI Apps
+# Usage: brew bundle --file=Brewfile.apps
+# Optional apps beyond the core developer setup
+
+# Communication
+cask "signal"           # Encrypted messaging
+cask "slack"            # Team communication
+cask "notion"           # Notes & wikis
+cask "notion-calendar"  # Calendar app
+
+# Notes & Writing
+cask "inkdrop"          # Markdown note-taking for developers
+cask "typora"           # Minimal markdown editor
+
+# AI
+cask "ollama"           # Local LLM runner
+cask "claude"           # Claude desktop app

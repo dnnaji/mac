@@ -96,9 +96,6 @@ defaults write com.apple.finder ShowStatusBar -bool true
 # Show file extensions
 defaults write NSGlobalDomain AppleShowAllExtensions -bool true
 
-# Disable warning when changing file extension
-defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false
-
 # Search current folder by default
 defaults write com.apple.finder FXDefaultSearchScope -string "SCcf"
 
@@ -132,6 +129,26 @@ defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool fa
 # defaults write com.apple.finder CreateDesktop -bool false
 
 echo "✓ Desktop configured"
+
+# =============================================================================
+# Mission Control / Spaces (auto-applied, for Aerospace compatibility)
+# =============================================================================
+echo "Configuring Mission Control..."
+
+# Group windows by app in Mission Control (helps with Aerospace visibility)
+defaults write com.apple.dock expose-group-apps -bool true
+
+# Ensure displays have separate Spaces (required for multi-monitor tiling WMs)
+defaults write com.apple.spaces spans-displays -bool false
+
+# Don't automatically rearrange Spaces based on recent use
+defaults write com.apple.dock mru-spaces -bool false
+
+# Disable Sequoia's native window tiling (conflicts with Aerospace)
+# This prevents drag-to-edge window snapping
+defaults write com.apple.WindowManager EnableTilingByEdgeDrag -bool false
+
+echo "✓ Mission Control configured (for Aerospace)"
 
 # =============================================================================
 # Keyboard (prompted)
@@ -198,6 +215,9 @@ defaults write com.apple.screencapture disable-shadow -bool true
 
 echo "✓ Screenshots configured (saving to ~/Pictures/Screenshots)"
 
+# Restart SystemUIServer to apply screenshot settings
+killall SystemUIServer 2>/dev/null
+
 # =============================================================================
 # Security (prompted, requires sudo)
 # =============================================================================
@@ -209,11 +229,7 @@ if confirm "Configure Security (firewall, guest account)?"
         echo "Elevated privileges are required for Security settings."
 
         # In interactive mode, request sudo credentials instead of exiting early
-        set -l is_noninteractive 0
-        if set -q _flag_yes; or set -q CI; or set -q NONINTERACTIVE
-            set is_noninteractive 1
-        end
-        if test $is_noninteractive -eq 0
+        if not set -q _flag_yes; and not set -q CI; and not set -q NONINTERACTIVE
             echo "Requesting sudo credentials..."
             if not sudo -v
                 echo "Skipping Security because sudo authentication failed."
@@ -225,7 +241,7 @@ if confirm "Configure Security (firewall, guest account)?"
         end
     end
 
-    if test $security_can_run -eq 1
+    if test "$security_can_run" -eq 1
         echo "Configuring Security..."
 
         # Disable guest account
@@ -274,8 +290,8 @@ defaults write NSGlobalDomain PMPrintingExpandedStateForPrint2 -bool true
 # Save to disk (not to iCloud) by default
 defaults write NSGlobalDomain NSDocumentSaveNewDocumentsToCloud -bool false
 
-# Disable the "Are you sure you want to open this application?" dialog
-# Keeping LSQuarantine enabled - the "downloaded from internet" prompt is a valuable security layer
+# Note: LSQuarantine ("Are you sure you want to open this application?") is kept enabled
+# This warning for downloaded apps is a valuable security layer
 
 echo "✓ Misc settings configured"
 

@@ -25,38 +25,48 @@ Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agen
 
 2. Clone and run:
    ```fish
-   git clone <repo> ~/i/adr
-   cd ~/i/adr/mac-bootstrap
+   git clone <repo> ~/i/mac
+   cd ~/i/mac
    claude
-   # Then: /mac-bootstrap
+   # Then: /mac-bootstrap (Claude Code Slash Command)
    ```
 
 ## Structure
 
 ```
-scripts/                     # Numbered Fish scripts (00-07)
+scripts/                     # Numbered Fish scripts (00-08)
 ├── 00_discover.fish         # Audit current state (JSON output)
-├── 01_core_cli.fish         # Install core CLI tools
+├── 01_core_cli.fish         # Install core CLI tools (includes gh)
 ├── 02_node_typescript.fish  # fnm + Node + tsx + ni
+├── 02b_ai_tools.fish        # AI CLI tools (Ollama, Gemini, Codex)
 ├── 03_ssh.fish              # SSH key generation
+├── 03b_git.fish             # Git config + GitHub CLI auth
 ├── 04_fish_setup.fish       # Fisher + plugins
 ├── 05_dotfiles.fish         # Symlink dotfiles
-├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard
-└── 07_cursor_extensions.fish # Install Cursor extensions
+├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard, Aerospace
+├── 07_cursor_extensions.fish # Install Cursor extensions
+└── 08_manual_apps.fish      # Apps requiring manual install (Ice)
 
 Brewfile                     # Core CLI tools (always)
 Brewfile.casks               # GUI apps (Cursor, Ghostty, Raycast, etc.)
+Brewfile.apps                # Common apps (Signal, Slack, Notion, etc.)
 Brewfile.cloud               # AWS/Azure/GCP (optional)
 Brewfile.k8s                 # Kubernetes (optional)
 Brewfile.security            # LuLu, Malwarebytes, BlockBlock
-Brewfile.mas                 # Mac App Store apps (Pandan)
+Brewfile.mas                 # Mac App Store apps (Pandan, Amphetamine)
+
+docs/
+└── aerospace-guide.md       # Aerospace + macOS Sequoia usage guide
 
 dotfiles/
+├── CLAUDE.md                # Claude Code root config
+├── aerospace/aerospace.toml # Aerospace window manager config
+├── ghostty/config           # Ghostty terminal config
 ├── gitconfig
 ├── npmrc
 ├── starship.toml
 ├── cursor/extensions.txt    # Cursor extension list
-├── fish/functions/          # 20 Fish functions
+├── fish/functions/          # Fish functions (23)
 └── ssh/config.template
 ```
 
@@ -82,6 +92,9 @@ dotfiles/
 | `b`            | brew maintenance (update, upgrade, cleanup) |
 | `r [dir]`      | cd to ~/r/ reproductions                    |
 | `cloner <url>` | clone to ~/r/ + open in cursor              |
+| `gsearch`      | Gemini web search                           |
+| `gfetch`       | Gemini web fetch (multi-URL)                |
+| `cx`           | Codex code review (GPT 5.1)                 |
 
 ## AeroSpace (Tiling Window Manager)
 
@@ -123,6 +136,34 @@ After `brew bundle --file=Brewfile.security`:
 3. **BlockBlock**: Approve System Extension in System Settings
 
 These require manual approval due to macOS security restrictions.
+
+## Menu Bar
+
+### Ice
+Menu bar manager (Bartender alternative, free/open source). Installed via `08_manual_apps.fish` from GitHub releases because Homebrew version doesn't support macOS Tahoe.
+
+After installation:
+1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable Ice
+2. Configure hidden items by clicking the Ice icon
+
+## Window Management
+
+### Aerospace
+Tiling window manager (i3-style). After installation:
+
+1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable AeroSpace
+2. Start: `open -a AeroSpace` or enable "start-at-login" in config
+
+**Quick Reference** (alt = option key):
+| Key | Action |
+|-----|--------|
+| `alt-h/j/k/l` | Focus window (vim-style) |
+| `alt-shift-h/j/k/l` | Move window |
+| `alt-1-5` | Switch workspace |
+| `alt-shift-1-5` | Move to workspace |
+| `alt-f` | Fullscreen |
+
+**Full guide**: [docs/aerospace-guide.md](docs/aerospace-guide.md) - keybindings, gestures, troubleshooting
 
 ## Password Management
 

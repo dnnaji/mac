@@ -16,13 +16,15 @@ cask "bruno"            # API client (Postman alternative)
 # Productivity
 cask "raycast"          # Launcher (Spotlight replacement)
 cask "arc"              # Browser
-cask "rectangle"        # Window management (snap zones)
-cask "nikitabobko/tap/aerospace"  # i3-like tiling window manager
+cask "google-chrome"    # Browser
+cask "zen"              # Privacy-focused Firefox fork
+cask "chatgpt-atlas"    # ChatGPT desktop app
+cask "aerospace"        # i3-like tiling window manager
 cask "stats"            # System monitor in menubar
 cask "itsycal"          # Menubar calendar
 cask "maccy"            # Clipboard manager
 cask "alt-tab"          # Better alt-tab
-cask "hiddenbar"        # Hide menubar icons
+# Ice (menu bar manager) installed via scripts/08_manual_apps.fish (Tahoe compat)
 
 # Fonts
 cask "font-fira-code-nerd-font"

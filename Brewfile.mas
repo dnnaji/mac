@@ -5,6 +5,7 @@
 
 # Productivity
 mas "Pandan", id: 1569600264        # Break reminder for eye strain/RSI
+mas "Amphetamine", id: 937984704    # Keep Mac awake
 
 # Security
 mas "Bitwarden", id: 1352778147     # Password manager

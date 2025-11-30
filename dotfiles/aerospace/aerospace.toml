@@ -33,6 +33,10 @@ alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 
+# Workspace Cycle (for gestures)
+alt-left = 'workspace prev'
+alt-right = 'workspace next'
+
 # Move to workspace
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
@@ -49,3 +53,45 @@ alt-shift-space = 'layout floating tiling'
 # Resize
 alt-minus = 'resize smart -50'
 alt-equal = 'resize smart +50'
+
+# =============================================================================
+# Monitor Assignment
+# =============================================================================
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 'main'
+4 = 'secondary'
+5 = 'secondary'
+
+# =============================================================================
+# Auto-route Apps to Workspaces
+# =============================================================================
+
+# Workspace 1: ChatGPT + Atlas
+[[on-window-detected]]
+if.app-id = 'com.openai.chat'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'com.openai.atlas.web.helper.plugin'
+run = 'move-node-to-workspace 1'
+
+# Workspace 2: Ghostty
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace 2'
+
+# Workspace 3: Cursor + Antigravity
+[[on-window-detected]]
+if.app-id = 'com.todesktop.230313mzl4w4u92'
+run = 'move-node-to-workspace 3'
+
+[[on-window-detected]]
+if.app-id = 'com.google.antigravity'
+run = 'move-node-to-workspace 3'
+
+# Workspace 4: Repo Prompt
+[[on-window-detected]]
+if.app-id = 'com.pvncher.repoprompt'
+run = 'move-node-to-workspace 4'

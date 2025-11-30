@@ -1,269 +1,252 @@
 # Mac Bootstrap
 
-> **WARNING**: Automating macOS setup with AI tools can be dangerous. This project executes shell scripts with elevated privileges (sudo), modifies system preferences via `defaults write`, installs software, and symlinks dotfiles. **Proceed at your own risk.** Review all scripts before execution.
+> **WARNING**: This project executes shell scripts with sudo, modifies system preferences, installs software, and symlinks dotfiles. Review scripts before execution.
 
-Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agent-runnable.
+Claude Code-driven macOS setup. Fish shell, idempotent, agent-runnable.
 
-## Workflow (Two Windows)
+## Quick Start (Fresh Mac)
 
-**Window 1: Claude Code** - orchestrates scripts
-**Window 2: Terminal** - interactive steps
+Copy-paste these commands on a brand new Mac.
 
-### Phase 0: Prerequisites (Terminal)
-
-Run manually before Claude Code can help:
+### Step 1: Prerequisites (Terminal)
 
 ```bash
-# Xcode CLT
+# Xcode Command Line Tools
 xcode-select --install
 
 # Homebrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+# Add Homebrew to PATH (run the command Homebrew tells you)
+eval "$(/opt/homebrew/bin/brew shellenv)"
 
 # Fish shell
 brew install fish
 sudo sh -c 'echo /opt/homebrew/bin/fish >> /etc/shells'
 chsh -s /opt/homebrew/bin/fish
 
+# Node.js (for Claude Code)
+brew install node
+
 # Claude Code
 npm install -g @anthropic-ai/claude-code
 ```
 
-Then clone and start Claude Code:
+### Step 2: Clone Public Repo
+
+```bash
+# Create dev directory
+mkdir -p ~/i
+
+# Clone public bootstrap repo (HTTPS - no SSH key needed yet)
+git clone https://github.com/dnnaji/mac.git ~/i/mac
+cd ~/i/mac
+```
+
+### Step 3: SSH & Git Setup (Terminal)
+
+Run these interactively to set up SSH and authenticate with GitHub:
 
 ```fish
-git clone <repo> ~/i/mac
+fish scripts/03_ssh.fish      # Generate SSH key, shows public key to copy
+fish scripts/03b_git.fish     # Git config + GitHub CLI auth (opens browser)
+```
+
+**Important**: Add your SSH key to GitHub before proceeding:
+1. Copy the public key shown by `03_ssh.fish`
+2. Go to https://github.com/settings/keys → New SSH key → Paste
+
+### Step 4: Clone Private Repo
+
+```bash
+# Now SSH works - clone your private overlay
+git clone git@github.com:dnnaji/mac-private.git ~/i/mac/private
+```
+
+### Step 5: Run Bootstrap
+
+Open **two terminal windows**:
+
+**Window 1 - Claude Code:**
+```fish
 cd ~/i/mac
 claude
+# Then type: /mac-bootstrap
 ```
 
-### Phase 1-2: Core Setup (Claude Code)
+Claude Code runs the remaining scripts automatically.
 
-Run `/mac-bootstrap` - Claude Code handles:
-- `00_discover.fish` - audit current state
-- `01_core_cli.fish` - CLI tools (Brewfile)
-- `02_node_typescript.fish` - fnm + Node
-- `02b_ai_tools.fish` - AI CLIs (Ollama, Gemini, Codex)
+### Step 6: Post-Install (System Settings)
 
-### Phase 3: SSH & Git (Terminal)
-
-**Interactive prompts** - run in your terminal window:
-
-```fish
-fish scripts/03_ssh.fish      # Prompts for SSH key details
-fish scripts/03b_git.fish     # Prompts for git config, opens browser for gh auth
-```
-
-Tell Claude Code when done to continue.
-
-### Phase 4-6: Config (Claude Code)
-
-Claude Code continues with:
-- `04_fish_setup.fish` - Fisher + plugins
-- `05_dotfiles.fish` - symlink configs
-- `06_macos_defaults.fish -y` - system prefs (auto-yes)
-- `07_cursor_extensions.fish` - Cursor extensions
-- `08_manual_apps.fish` - Ice menu bar manager
-
-### Optional: GUI Apps (Claude Code)
-
-```fish
-brew bundle --file=Brewfile.casks --no-lock    # Cursor, Ghostty, Raycast, etc.
-brew bundle --file=Brewfile.mas --no-lock      # Mac App Store (requires login)
-brew bundle --file=Brewfile.apps --no-lock     # Signal, Slack, Notion, etc.
-```
-
-### Post-Install: Permissions (System Settings)
-
-Manual approval required after installation:
-- **AeroSpace**: Privacy & Security → Accessibility
-- **Ice**: Privacy & Security → Accessibility
-- **Security tools**: Privacy & Security → Security (system extensions)
+Grant permissions manually:
+- **AeroSpace**: System Settings → Privacy & Security → Accessibility
+- **Ice**: System Settings → Privacy & Security → Accessibility
 
 Logout/restart for macOS defaults to take effect.
+
+---
+
+## Manual Bootstrap (Without Claude Code)
+
+If you prefer to run scripts manually:
+
+```fish
+cd ~/i/mac
+
+# 1. Audit current state
+fish scripts/00_discover.fish
+
+# 2. Core CLI tools
+fish scripts/01_core_cli.fish
+
+# 3. Node/TypeScript
+fish scripts/02_node_typescript.fish
+
+# 4. AI tools (Ollama, Gemini, Codex)
+fish scripts/02b_ai_tools.fish
+
+# 5. SSH key (interactive - prompts for email)
+fish scripts/03_ssh.fish
+
+# 6. Git config (interactive - prompts for name/email, opens browser)
+fish scripts/03b_git.fish
+
+# 7. Fish plugins
+fish scripts/04_fish_setup.fish
+
+# 8. Dotfiles + private overlay
+fish scripts/05_dotfiles.fish
+
+# 9. macOS preferences
+fish scripts/06_macos_defaults.fish -y
+
+# 10. Cursor extensions
+fish scripts/07_cursor_extensions.fish
+
+# 11. Manual apps (Ice)
+fish scripts/08_manual_apps.fish
+
+# Optional: GUI apps
+brew bundle --file=Brewfile.casks --no-lock
+brew bundle --file=Brewfile.apps --no-lock
+brew bundle --file=Brewfile.mas --no-lock    # Requires App Store login
+```
+
+---
+
+## Two-Repo Architecture
+
+```
+~/i/mac/                    # Public repo (github.com/dnnaji/mac)
+├── scripts/                # Bootstrap scripts
+├── dotfiles/               # Generic configs (no personal info)
+├── Brewfile*               # Package lists
+└── private/                # ← .gitignored
+
+~/i/mac/private/            # Private repo (github.com/dnnaji/mac-private)
+├── CLAUDE.md               # Personal workflow preferences
+├── gitconfig.local         # Git identity (name, email, signing key)
+├── ssh/config              # SSH host aliases
+└── fish/                   # Private functions/configs
+```
+
+The `05_dotfiles.fish` script automatically loads private configs if present.
+
+---
 
 ## Structure
 
 ```
-scripts/                     # Numbered Fish scripts (00-08)
-├── 00_discover.fish         # Audit current state (JSON output)
-├── 01_core_cli.fish         # Install core CLI tools (includes gh)
+scripts/
+├── 00_discover.fish         # Audit current state (JSON)
+├── 01_core_cli.fish         # Core CLI tools
 ├── 02_node_typescript.fish  # fnm + Node + tsx + ni
-├── 02b_ai_tools.fish        # AI CLI tools (Ollama, Gemini, Codex)
+├── 02b_ai_tools.fish        # Ollama, Gemini CLI, Codex CLI
 ├── 03_ssh.fish              # SSH key generation
-├── 03b_git.fish             # Git config + GitHub CLI auth
+├── 03b_git.fish             # Git + GitHub CLI
 ├── 04_fish_setup.fish       # Fisher + plugins
-├── 05_dotfiles.fish         # Symlink dotfiles
-├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard, Aerospace
-├── 07_cursor_extensions.fish # Install Cursor extensions
-└── 08_manual_apps.fish      # Apps requiring manual install (Ice)
+├── 05_dotfiles.fish         # Symlink configs + private overlay
+├── 06_macos_defaults.fish   # Finder, Dock, keyboard
+├── 07_cursor_extensions.fish
+└── 08_manual_apps.fish      # Ice menu bar
 
-Brewfile                     # Core CLI tools (always)
-Brewfile.casks               # GUI apps (Cursor, Ghostty, Raycast, etc.)
-Brewfile.apps                # Common apps (Signal, Slack, Notion, etc.)
-Brewfile.cloud               # AWS/Azure/GCP (optional)
-Brewfile.k8s                 # Kubernetes (optional)
+Brewfile                     # Core CLI (always)
+Brewfile.casks               # GUI apps (Cursor, Ghostty, Raycast)
+Brewfile.apps                # Common apps (Signal, Slack, Notion)
+Brewfile.cloud               # AWS/Azure/GCP
+Brewfile.k8s                 # Kubernetes tools
 Brewfile.security            # LuLu, Malwarebytes, BlockBlock
-Brewfile.mas                 # Mac App Store apps (Pandan, Amphetamine)
-
-docs/
-└── aerospace-guide.md       # Aerospace + macOS Sequoia usage guide
-
-dotfiles/
-├── CLAUDE.md                # Claude Code root config
-├── aerospace/aerospace.toml # Aerospace window manager config
-├── ghostty/config           # Ghostty terminal config
-├── gitconfig
-├── npmrc
-├── starship.toml
-├── cursor/extensions.txt    # Cursor extension list
-├── fish/functions/          # Fish functions (23)
-└── ssh/config.template
+Brewfile.mas                 # Mac App Store
 ```
+
+---
 
 ## Fish Functions
 
-| Function       | Description                                 |
-| -------------- | ------------------------------------------- |
-| `i [dir]`      | cd to ~/i/ or ~/i/dir                       |
-| `grt`          | cd to git root                              |
-| `clone <url>`  | git clone + cd                              |
-| `clonei <url>` | clone to ~/i/ + open in cursor              |
-| `gs`           | git status                                  |
-| `gp`           | git push                                    |
-| `gpf`          | git push --force-with-lease                 |
-| `gpl`          | git pull --rebase                           |
-| `main`         | checkout main                               |
-| `gsha`         | copy HEAD SHA to clipboard                  |
-| `d`            | run dev script via ni                       |
-| `build`        | run build script via ni                     |
-| `t`            | run test script via ni                      |
-| `s`            | run start script via ni                     |
-| `lint`         | run lint script via ni                      |
-| `b`            | brew maintenance (update, upgrade, cleanup) |
-| `r [dir]`      | cd to ~/r/ reproductions                    |
-| `cloner <url>` | clone to ~/r/ + open in cursor              |
-| `gsearch`      | Gemini web search                           |
-| `gfetch`       | Gemini web fetch (multi-URL)                |
-| `cx`           | Codex code review (GPT 5.1)                 |
+| Function | Description |
+|----------|-------------|
+| `i [dir]` | cd to ~/i/ or ~/i/dir |
+| `r [dir]` | cd to ~/r/ (reproductions) |
+| `clone <url>` | git clone + cd |
+| `clonei <url>` | clone to ~/i/ + open in Cursor |
+| `cloner <url>` | clone to ~/r/ + open in Cursor |
+| `gs` | git status |
+| `gp` | git push |
+| `gpf` | git push --force-with-lease |
+| `gpl` | git pull --rebase |
+| `main` | checkout main |
+| `grt` | cd to git root |
+| `gsha` | copy HEAD SHA to clipboard |
+| `d` / `build` / `t` / `s` / `lint` | Run package.json scripts via ni |
+| `b` | Brew maintenance (update, upgrade, cleanup) |
+| `gsearch` | Gemini web search |
+| `gfetch` | Gemini web fetch (multi-URL) |
+| `cx` | Codex code review (GPT 5.1) |
 
-## AeroSpace (Tiling Window Manager)
+---
 
-i3-style tiling window manager. Config: `dotfiles/aerospace/aerospace.toml`
+## AeroSpace (Window Manager)
 
-### Setup
-
-1. Launch: `open -a AeroSpace`
-2. Grant Accessibility permission when prompted
-3. Auto-starts on login after first run
-
-### Keybindings
+i3-style tiling. Config: `dotfiles/aerospace/aerospace.toml`
 
 | Keys | Action |
-| ---- | ------ |
-| `⌥ h/j/k/l` | Focus window left/down/up/right |
-| `⌥⇧ h/j/k/l` | Move window left/down/up/right |
-| `⌥ 1-5` | Switch to workspace 1-5 |
-| `⌥⇧ 1-5` | Move window to workspace 1-5 |
-| `⌥ f` | Toggle fullscreen |
-| `⌥ /` | Toggle horizontal/vertical split |
-| `⌥ ,` | Toggle accordion layout |
-| `⌥⇧ Space` | Toggle floating/tiling |
-| `⌥ -` | Resize smaller |
-| `⌥ =` | Resize larger |
+|------|--------|
+| `⌥ h/j/k/l` | Focus window |
+| `⌥⇧ h/j/k/l` | Move window |
+| `⌥ 1-5` | Switch workspace |
+| `⌥⇧ 1-5` | Move to workspace |
+| `⌥ f` | Fullscreen |
+| `⌥ /` | Toggle split direction |
+| `⌥⇧ Space` | Toggle floating |
 
-### Notes
+Full guide: [docs/aerospace-guide.md](docs/aerospace-guide.md)
 
-- **Conflicts with Rectangle**: Disable Rectangle if using AeroSpace (both manage windows)
-- Gaps: 8px inner/outer by default
-- Workspaces are virtual desktops (not tied to displays)
-
-## Private Overlay (Optional)
-
-For personal configs (git identity, SSH hosts, API keys), use a separate private repo:
-
-```fish
-# Clone private overlay into ignored directory
-git clone git@github.com:YOUR_USER/mac-private.git ~/i/mac/private
-```
-
-The `05_dotfiles.fish` script automatically loads from `private/` if present:
-- `gitconfig.local` → `~/.gitconfig.local` (user identity, signing key)
-- `ssh/config` → `~/.ssh/config` (host aliases)
-- `CLAUDE.md` → `~/CLAUDE.md` (full workflow preferences)
-- `fish/functions/` → private fish functions
-- `fish/conf.d/` → private fish config
-
-See [mac-private template](https://github.com/dnnaji/mac-private) for structure.
+---
 
 ## Security Tools
 
 After `brew bundle --file=Brewfile.security`:
 
-1. **LuLu**: Open app → Approve System Extension → Allow Network Filter
-2. **Malwarebytes**: Grant Full Disk Access in System Settings
-3. **BlockBlock**: Approve System Extension in System Settings
+1. **LuLu**: Approve System Extension → Allow Network Filter
+2. **Malwarebytes**: Grant Full Disk Access
+3. **BlockBlock**: Approve System Extension
 
-These require manual approval due to macOS security restrictions.
+---
 
 ## Manual Downloads
 
-Apps not available via Homebrew:
+| App | URL |
+|-----|-----|
+| Wispr Flow | https://wisprflow.ai/get-started |
+| Bitwarden CLI (bws) | https://github.com/bitwarden/sdk/releases |
 
-| App | Description | URL |
-|-----|-------------|-----|
-| Wispr Flow | Voice dictation (AI-powered) | https://wisprflow.ai/get-started |
-
-## Menu Bar
-
-### Ice
-Menu bar manager (Bartender alternative, free/open source). Installed via `08_manual_apps.fish` from GitHub releases because Homebrew version doesn't support macOS Tahoe.
-
-After installation:
-1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable Ice
-2. Configure hidden items by clicking the Ice icon
-
-## Window Management
-
-### Aerospace
-Tiling window manager (i3-style). After installation:
-
-1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable AeroSpace
-2. Start: `open -a AeroSpace` or enable "start-at-login" in config
-
-**Quick Reference** (alt = option key):
-| Key | Action |
-|-----|--------|
-| `alt-h/j/k/l` | Focus window (vim-style) |
-| `alt-shift-h/j/k/l` | Move window |
-| `alt-1-5` | Switch workspace |
-| `alt-shift-1-5` | Move to workspace |
-| `alt-f` | Fullscreen |
-
-**Full guide**: [docs/aerospace-guide.md](docs/aerospace-guide.md) - keybindings, gestures, troubleshooting
-
-## Password Management
-
-### Bitwarden
-- **App**: Installed via Mac App Store (`Brewfile.mas`)
-- **Secrets Manager CLI**: Manual install from https://github.com/bitwarden/sdk/releases
-  ```bash
-  # Download bws-macos-universal from releases
-  # Move to /usr/local/bin/bws
-  chmod +x /usr/local/bin/bws
-  ```
+---
 
 ## Idempotency
 
-All scripts check before acting:
-- `command -q <tool>` for CLI tools
-- `test -f <path>` for files
-- `test -L <path>` for symlinks
-
-Re-running any script is safe.
+All scripts check before acting. Re-running is safe.
 
 ## Influences
 
-This setup is inspired by:
-- [Omarchy](https://github.com/basecamp/omarchy) v3.2.0 - CLI tools (btop, lazydocker, dust, procs, try), Ghostty/Aerospace configs
-- [antfu/dotfiles](https://github.com/antfu/dotfiles) - Directory structure (`~/i/` projects, `~/r/` reproductions)
+- [Omarchy](https://github.com/basecamp/omarchy) v3.2.0
+- [antfu/dotfiles](https://github.com/antfu/dotfiles)

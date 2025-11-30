@@ -37,6 +37,8 @@ Ask which phases to install:
 
 ### Step 3: Execute Phases
 
+**Note**: SSH and Git setup (scripts 03_ssh.fish and 03b_git.fish) should already be done before running this command - they're required to clone the private repo.
+
 **Claude Code Phases** (you run these):
 ```fish
 fish scripts/00_discover.fish
@@ -50,15 +52,14 @@ fish scripts/07_cursor_extensions.fish
 fish scripts/08_manual_apps.fish
 ```
 
-**Terminal Phases** (user runs in separate window):
-When you reach Phase 3, STOP and tell the user:
+If SSH/Git are NOT yet configured, STOP and tell the user:
 
-> "Phase 3 requires interactive input. Run these in your Terminal window:"
+> "SSH and Git need to be configured first. Run these in your Terminal:"
 > ```fish
-> fish scripts/03_ssh.fish      # Prompts for SSH key details
-> fish scripts/03b_git.fish     # Prompts for git config, opens browser for gh auth
+> fish scripts/03_ssh.fish      # Generate SSH key
+> fish scripts/03b_git.fish     # Git config + GitHub auth
 > ```
-> "Let me know when done, and I'll continue with Phase 4."
+> "Add the SSH key to GitHub, then clone your private repo and let me know when ready."
 
 **Optional Brewfiles** (you run these):
 ```fish

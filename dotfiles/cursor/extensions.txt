@@ -1,0 +1,87 @@
+# Cursor Extensions
+# Install: cat extensions.txt | xargs -L 1 cursor --install-extension
+# Or run: fish scripts/07_cursor_extensions.fish
+
+# Themes & Icons
+antfu.theme-vitesse
+pkief.material-icon-theme
+vscode-icons-team.vscode-icons
+tal7aouy.icons
+t3dotgg.vsc-material-theme-but-i-wont-sue-you
+
+# antfu suite (highly recommended)
+antfu.array-index-inlay
+antfu.browse-lite
+antfu.file-nesting
+antfu.goto-alias
+antfu.open-in-github-button
+antfu.pair-diff
+antfu.smart-clicks
+antfu.vite
+
+# AI
+anthropic.claude-code
+openai.chatgpt
+sourcegraph.amp
+
+# Git & GitHub
+github.vscode-github-actions
+github.vscode-pull-request-github
+fabiospampinato.vscode-open-in-github
+
+# JavaScript/TypeScript
+dbaeumer.vscode-eslint
+oven.bun-vscode
+
+# Deno
+denoland.vscode-deno
+justjavac.vscode-deno-extensionpack
+laurencebahiirwa.deno-std-lib-snippets
+thinker.deno-standard-lib-snippets
+
+# Astro
+astro-build.astro-vscode
+
+# Docker & Containers
+ms-azuretools.vscode-docker
+ms-azuretools.vscode-containers
+anysphere.remote-containers
+
+# Java/Kotlin/Gradle (optional - comment out if not needed)
+redhat.java
+fwcd.kotlin
+mathiasfrohlich.kotlin
+vscjava.vscode-java-pack
+vscjava.vscode-java-debug
+vscjava.vscode-java-dependency
+vscjava.vscode-java-test
+vscjava.vscode-maven
+vscjava.vscode-gradle
+naco-siren.gradle-language
+
+# Markdown
+yzhang.markdown-all-in-one
+davidanson.vscode-markdownlint
+bierner.markdown-preview-github-styles
+shd101wyy.markdown-preview-enhanced
+unifiedjs.vscode-mdx
+
+# API/HTTP
+humao.rest-client
+andrevaleoutlook.vscode-dot-http-files
+
+# Data formats
+tamasfe.even-better-toml
+qwtel.sqlite-viewer
+tomoki1207.pdf
+
+# Diagrams
+tomoyukim.vscode-mermaid-editor
+vstirbu.vscode-mermaid-preview
+
+# IntelliCode
+visualstudioexptteam.vscodeintellicode
+visualstudioexptteam.intellicode-api-usage-examples
+
+# Package management
+codeandstuff.package-json-upgrade

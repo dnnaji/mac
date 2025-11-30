@@ -1,0 +1,33 @@
+# Brewfile.casks - GUI Applications
+# Usage: brew bundle --file=Brewfile.casks
+
+tap "nikitabobko/tap"  # For aerospace
+
+# Terminals & Editors
+cask "ghostty"          # Fast GPU terminal
+cask "cursor"           # AI-powered editor
+cask "zed"              # Fast collaborative editor
+cask "antigravity"      # Google's agentic IDE (Gemini-powered)
+
+# Dev Tools
+cask "orbstack"         # Docker/Linux VMs (faster than Docker Desktop)
+cask "bruno"            # API client (Postman alternative)
+
+# Productivity
+cask "raycast"          # Launcher (Spotlight replacement)
+cask "arc"              # Browser
+cask "google-chrome"    # Browser
+cask "zen"              # Privacy-focused Firefox fork
+cask "chatgpt-atlas"    # ChatGPT desktop app
+cask "aerospace"        # i3-like tiling window manager
+cask "stats"            # System monitor in menubar
+cask "itsycal"          # Menubar calendar
+cask "maccy"            # Clipboard manager
+cask "alt-tab"          # Better alt-tab
+# Ice (menu bar manager) installed via scripts/08_manual_apps.fish (Tahoe compat)
+
+# Fonts
+cask "font-fira-code-nerd-font"
+cask "font-geist-mono"
+cask "font-hack-nerd-font"
+cask "font-cascadia-code-nf"    # Microsoft's coding font + Nerd Font

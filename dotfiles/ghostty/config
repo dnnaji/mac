@@ -1,0 +1,63 @@
+# Ghostty configuration
+
+# =============================================================================
+# VISUAL
+# =============================================================================
+theme = Catppuccin Mocha
+font-family = FiraCode Nerd Font Mono
+font-size = 16
+background-opacity = 0.85
+background-blur-radius = 20
+alpha-blending = native
+
+# =============================================================================
+# WINDOW
+# =============================================================================
+macos-titlebar-style = transparent
+macos-option-as-alt = true
+window-height = 36
+window-width = 160
+window-padding-x = 12
+window-padding-y = 12
+window-padding-balance = true
+
+# =============================================================================
+# CURSOR
+# =============================================================================
+cursor-style = block
+cursor-style-blink = false
+
+# =============================================================================
+# BEHAVIOR
+# =============================================================================
+window-inherit-working-directory = false
+working-directory = home
+scrollback-limit = 10000
+
+# =============================================================================
+# QUICK TERMINAL
+# =============================================================================
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+quick-terminal-position = bottom
+
+# =============================================================================
+# KEYBINDINGS
+# =============================================================================
+
+# Tab navigation
+keybind = shift+ctrl+left_bracket=previous_tab
+keybind = shift+ctrl+right_bracket=next_tab
+keybind = shift+ctrl+comma=move_tab:-1
+keybind = shift+ctrl+period=move_tab:+1
+
+# Split management (Omarchy-style)
+keybind = ctrl+shift+e=new_split:right
+keybind = ctrl+shift+o=new_split:down
+keybind = ctrl+alt+up=goto_split:up
+keybind = ctrl+alt+down=goto_split:down
+keybind = ctrl+alt+left=goto_split:left
+keybind = ctrl+alt+right=goto_split:right
+
+# Utility
+keybind = cmd+shift+r=reload_config
+keybind = shift+enter=text:\n

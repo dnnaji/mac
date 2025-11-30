@@ -1,0 +1,15 @@
+# Brewfile.mas - Mac App Store Apps
+# Usage: brew bundle --file=Brewfile.mas
+# Requires: brew install mas && mas signin
+# Note: Must be signed into Mac App Store first
+
+# Productivity
+mas "Pandan", id: 1569600264        # Break reminder for eye strain/RSI
+mas "Amphetamine", id: 937984704    # Keep Mac awake
+
+# Security
+mas "Bitwarden", id: 1352778147     # Password manager
+
+# Optional - uncomment if needed:
+# mas "Xcode", id: 497799835
+# mas "1Password 7", id: 1333542190

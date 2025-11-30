@@ -1,0 +1,31 @@
+# SSH Config Template
+# Copy to ~/.ssh/config and customize
+
+# Global defaults
+Host *
+  AddKeysToAgent yes
+  UseKeychain yes
+  IdentityFile ~/.ssh/id_ed25519
+  ServerAliveInterval 60
+  ServerAliveCountMax 5
+
+# OrbStack integration (if using OrbStack)
+# Include ~/.orbstack/ssh/config
+
+# GitHub
+Host github.com
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519
+
+# Example: Personal server
+# Host myserver
+#   HostName server.example.com
+#   User deploy
+#   IdentityFile ~/.ssh/id_ed25519
+#   Port 22
+
+# Example: Work jump host
+# Host work-*
+#   ProxyJump jumphost.work.com
+#   User yourworkuser

@@ -1,0 +1,28 @@
+# Private overlay (separate repo cloned here)
+private/
+
+# Local/secret files
+*.local
+*.secret
+*.override
+
+# Keys and certs
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+
+# Env files
+.env
+.env.*
+
+# Kubernetes
+*.kubeconfig
+
+# macOS
+.DS_Store

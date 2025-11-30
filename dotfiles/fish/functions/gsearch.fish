@@ -7,5 +7,6 @@ function gsearch --description "Gemini web search"
         echo "Usage: gsearch <query>" >&2
         return 1
     end
-    gemini --model gemini-3-pro-preview -p "Use google_web_search(query=\"$argv\")" -y
+    set -l query (string join ' ' -- $argv)
+    gemini --model gemini-3-pro-preview -p "Use google_web_search(query=\"$query\")" -y
 end

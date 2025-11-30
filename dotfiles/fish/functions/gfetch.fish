@@ -7,5 +7,6 @@ function gfetch --description "Gemini web fetch"
         echo "Usage: gfetch <prompt with URLs>" >&2
         return 1
     end
-    gemini --model gemini-3-pro-preview -p "Use web_fetch(prompt=\"$argv\")" -y
+    set -l prompt (string join ' ' -- $argv)
+    gemini --model gemini-3-pro-preview -p "Use web_fetch(prompt=\"$prompt\")" -y
 end

@@ -34,7 +34,7 @@ Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agen
 ## Structure
 
 ```
-scripts/                     # Numbered Fish scripts (00-07)
+scripts/                     # Numbered Fish scripts (00-08)
 ├── 00_discover.fish         # Audit current state (JSON output)
 ├── 01_core_cli.fish         # Install core CLI tools (includes gh)
 ├── 02_node_typescript.fish  # fnm + Node + tsx + ni
@@ -43,7 +43,8 @@ scripts/                     # Numbered Fish scripts (00-07)
 ├── 04_fish_setup.fish       # Fisher + plugins
 ├── 05_dotfiles.fish         # Symlink dotfiles
 ├── 06_macos_defaults.fish   # Configure Finder, Dock, keyboard
-└── 07_cursor_extensions.fish # Install Cursor extensions
+├── 07_cursor_extensions.fish # Install Cursor extensions
+└── 08_manual_apps.fish      # Apps requiring manual install (Ice)
 
 Brewfile                     # Core CLI tools (always)
 Brewfile.casks               # GUI apps (Cursor, Ghostty, Raycast, etc.)
@@ -95,6 +96,15 @@ After `brew bundle --file=Brewfile.security`:
 3. **BlockBlock**: Approve System Extension in System Settings
 
 These require manual approval due to macOS security restrictions.
+
+## Menu Bar
+
+### Ice
+Menu bar manager (Bartender alternative, free/open source). Installed via `08_manual_apps.fish` from GitHub releases because Homebrew version doesn't support macOS Tahoe.
+
+After installation:
+1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable Ice
+2. Configure hidden items by clicking the Ice icon
 
 ## Window Management
 

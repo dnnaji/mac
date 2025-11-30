@@ -20,7 +20,7 @@ cask "stats"            # System monitor in menubar
 cask "itsycal"          # Menubar calendar
 cask "maccy"            # Clipboard manager
 cask "alt-tab"          # Better alt-tab
-cask "hiddenbar"        # Hide menubar icons
+# Ice (menu bar manager) installed via scripts/08_manual_apps.fish (Tahoe compat)
 
 # Fonts
 cask "font-fira-code-nerd-font"

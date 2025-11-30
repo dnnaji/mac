@@ -24,13 +24,15 @@ set -l installed (cursor --list-extensions 2>/dev/null)
 set -l count 0
 set -l skipped 0
 
-for line in (cat $EXTENSIONS_FILE)
+# Read file line-by-line (not token-by-token)
+while read -l line
+    set line (string trim $line)
     # Skip comments and empty lines
-    if string match -q '#*' $line; or test -z (string trim $line)
+    if test -z "$line"; or string match -q '#*' "$line"
         continue
     end
 
-    set -l ext (string trim $line)
+    set -l ext $line
 
     # Check if already installed
     if contains $ext $installed
@@ -46,7 +48,7 @@ for line in (cat $EXTENSIONS_FILE)
             echo "✗ $ext (failed)"
         end
     end
-end
+end < "$EXTENSIONS_FILE"
 
 echo ""
 echo "=== Cursor Extensions Complete ==="

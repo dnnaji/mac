@@ -25,15 +25,16 @@ end
 # Source fnm for this session
 fnm env --use-on-cd --shell fish | source
 
-# Install Node LTS if not present
-if not command -q node
-    echo ""
-    echo "Installing Node.js LTS..."
-    fnm install --lts
-    fnm default lts-latest
-    echo "✓ Node LTS installed and set as default"
+# Always ensure Node LTS is installed and set as default
+echo ""
+echo "Ensuring Node.js LTS..."
+fnm install --lts
+fnm default lts-latest
+if command -q node
+    echo "✓ Node LTS ready: "(node -v)
 else
-    echo "· Node already installed: "(node -v)
+    echo "ERROR: Node installation failed"
+    exit 1
 end
 
 # Reload fnm to pick up new Node
@@ -54,17 +55,25 @@ echo ""
 echo "=== TypeScript Tools ==="
 
 if not command -q tsx
-    echo "Installing tsx..."
-    npm install -g tsx
-    echo "✓ tsx installed"
+    if command -q npm
+        echo "Installing tsx..."
+        npm install -g tsx
+        echo "✓ tsx installed"
+    else
+        echo "· npm not available, skipping tsx"
+    end
 else
     echo "· tsx already installed"
 end
 
 if not command -q tsc
-    echo "Installing typescript..."
-    npm install -g typescript
-    echo "✓ typescript installed"
+    if command -q npm
+        echo "Installing typescript..."
+        npm install -g typescript
+        echo "✓ typescript installed"
+    else
+        echo "· npm not available, skipping typescript"
+    end
 else
     echo "· typescript already installed: "(tsc --version)
 end

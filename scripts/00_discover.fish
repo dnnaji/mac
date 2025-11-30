@@ -92,7 +92,7 @@ echo '  },'
 
 echo '  "phase7_editors": {'
 echo '    "cursor": '(check_dir "/Applications/Cursor.app")','
-echo '    "cursor_extensions": '(cursor --list-extensions 2>/dev/null | wc -l | string trim)','
+echo '    "cursor_extensions": '(command -q cursor; and cursor --list-extensions 2>/dev/null | wc -l | string trim; or echo "0")','
 echo '    "zed": '(check_dir "/Applications/Zed.app")','
 echo '    "antigravity": '(check_dir "/Applications/Antigravity.app")
 echo '  },'

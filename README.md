@@ -54,6 +54,7 @@ Brewfile.mas                 # Mac App Store apps (Pandan)
 
 dotfiles/
 ├── aerospace/aerospace.toml # Aerospace window manager config
+├── ghostty/config           # Ghostty terminal config
 ├── gitconfig
 ├── npmrc
 ├── starship.toml

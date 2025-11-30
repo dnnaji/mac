@@ -7,6 +7,9 @@ brew "awscli"
 # Azure
 brew "azure-cli"
 
+# Google Cloud
+cask "google-cloud-sdk"
+
 # Terraform/OpenTofu
 brew "opentofu"
 # brew "terraform"  # Use opentofu instead

@@ -1,6 +1,8 @@
 # Brewfile.casks - GUI Applications
 # Usage: brew bundle --file=Brewfile.casks
 
+tap "nikitabobko/tap"  # For aerospace
+
 # Terminals & Editors
 cask "ghostty"          # Fast GPU terminal
 cask "cursor"           # AI-powered editor
@@ -15,7 +17,7 @@ cask "bruno"            # API client (Postman alternative)
 cask "raycast"          # Launcher (Spotlight replacement)
 cask "arc"              # Browser
 cask "rectangle"        # Window management (snap zones)
-cask "aerospace"        # i3-like tiling window manager
+cask "nikitabobko/tap/aerospace"  # i3-like tiling window manager
 cask "stats"            # System monitor in menubar
 cask "itsycal"          # Menubar calendar
 cask "maccy"            # Clipboard manager

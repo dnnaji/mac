@@ -83,6 +83,37 @@ dotfiles/
 | `r [dir]`      | cd to ~/r/ reproductions                    |
 | `cloner <url>` | clone to ~/r/ + open in cursor              |
 
+## AeroSpace (Tiling Window Manager)
+
+i3-style tiling window manager. Config: `dotfiles/aerospace/aerospace.toml`
+
+### Setup
+
+1. Launch: `open -a AeroSpace`
+2. Grant Accessibility permission when prompted
+3. Auto-starts on login after first run
+
+### Keybindings
+
+| Keys | Action |
+| ---- | ------ |
+| `⌥ h/j/k/l` | Focus window left/down/up/right |
+| `⌥⇧ h/j/k/l` | Move window left/down/up/right |
+| `⌥ 1-5` | Switch to workspace 1-5 |
+| `⌥⇧ 1-5` | Move window to workspace 1-5 |
+| `⌥ f` | Toggle fullscreen |
+| `⌥ /` | Toggle horizontal/vertical split |
+| `⌥ ,` | Toggle accordion layout |
+| `⌥⇧ Space` | Toggle floating/tiling |
+| `⌥ -` | Resize smaller |
+| `⌥ =` | Resize larger |
+
+### Notes
+
+- **Conflicts with Rectangle**: Disable Rectangle if using AeroSpace (both manage windows)
+- Gaps: 8px inner/outer by default
+- Workspaces are virtual desktops (not tied to displays)
+
 ## Security Tools
 
 After `brew bundle --file=Brewfile.security`:

@@ -209,7 +209,11 @@ if confirm "Configure Security (firewall, guest account)?"
         echo "Elevated privileges are required for Security settings."
 
         # In interactive mode, request sudo credentials instead of exiting early
-        if not (set -q _flag_yes; or set -q CI; or set -q NONINTERACTIVE)
+        set -l is_noninteractive 0
+        if set -q _flag_yes; or set -q CI; or set -q NONINTERACTIVE
+            set is_noninteractive 1
+        end
+        if test $is_noninteractive -eq 0
             echo "Requesting sudo credentials..."
             if not sudo -v
                 echo "Skipping Security because sudo authentication failed."

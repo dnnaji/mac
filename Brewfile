@@ -2,9 +2,6 @@
 # Usage: brew bundle --file=Brewfile
 # These are always installed on a new Mac
 
-tap "homebrew/bundle"
-tap "tobi/tap"
-
 # Shell & Terminal
 brew "fish"
 brew "tmux"
@@ -38,7 +35,6 @@ brew "lazydocker"   # Docker TUI
 brew "btop"         # System monitor
 brew "dust"         # Disk usage visualizer
 brew "procs"        # Modern ps replacement
-brew "try"          # Fresh directories for experiments
 brew "direnv"       # Directory-based env vars
 brew "gnupg"        # GPG encryption
 brew "neovim"       # Editor
@@ -53,5 +49,6 @@ brew "lf"           # Terminal file manager (vim-like)
 
 # Node ecosystem
 brew "fnm"          # Fast Node Manager
-brew "bun"          # Fast JS runtime/bundler
+brew "deno"         # Secure JS/TS runtime
 brew "ni"           # Universal package manager (auto-detects npm/yarn/pnpm/bun)
+# bun: Install via curl -fsSL https://bun.com/install | bash

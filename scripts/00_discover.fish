@@ -15,6 +15,11 @@ function check_dir
     test -d $argv[1]; and echo "true"; or echo "false"
 end
 
+function check_cmd_or_path
+    # Check command in PATH or explicit file path
+    command -q $argv[1]; or test -x $argv[2]; and echo "true"; or echo "false"
+end
+
 echo "{"
 echo '  "system": {'
 echo '    "macos": "'(sw_vers -productVersion)'",'
@@ -58,8 +63,8 @@ echo '  "phase2_node": {'
 echo '    "fnm": '(check_cmd fnm)','
 echo '    "node": '(check_cmd node)','
 echo '    "npm": '(check_cmd npm)','
-echo '    "bun": '(check_cmd bun)','
-echo '    "deno": '(check_cmd deno)','
+echo '    "bun": '(check_cmd_or_path bun ~/.bun/bin/bun)','
+echo '    "deno": '(check_cmd_or_path deno ~/.deno/bin/deno)','
 echo '    "tsx": '(check_cmd tsx)','
 echo '    "typescript": '(check_cmd tsc)
 echo '  },'

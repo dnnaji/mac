@@ -30,7 +30,7 @@ end
 # Install from Brewfile
 echo ""
 echo "Installing from Brewfile..."
-brew bundle --file="$ROOT_DIR/Brewfile" --no-lock
+brew bundle --file="$ROOT_DIR/Brewfile"
 
 # Verify key tools
 echo ""

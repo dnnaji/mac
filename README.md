@@ -53,6 +53,7 @@ Brewfile.security            # LuLu, Malwarebytes, BlockBlock
 Brewfile.mas                 # Mac App Store apps (Pandan)
 
 dotfiles/
+├── aerospace/aerospace.toml # Aerospace window manager config
 ├── gitconfig
 ├── npmrc
 ├── starship.toml
@@ -93,6 +94,26 @@ After `brew bundle --file=Brewfile.security`:
 3. **BlockBlock**: Approve System Extension in System Settings
 
 These require manual approval due to macOS security restrictions.
+
+## Window Management
+
+### Aerospace
+Tiling window manager (i3-style). After installation:
+
+1. Grant Accessibility permission: System Settings → Privacy & Security → Accessibility → Enable AeroSpace
+2. Start: `open -a AeroSpace` or enable "start-at-login" in config
+
+**Keybindings** (alt = option key):
+| Key | Action |
+|-----|--------|
+| `alt-h/j/k/l` | Focus window (vim-style) |
+| `alt-shift-h/j/k/l` | Move window |
+| `alt-1-5` | Switch workspace |
+| `alt-shift-1-5` | Move to workspace |
+| `alt-f` | Fullscreen |
+| `alt-/` | Toggle horizontal/vertical |
+| `alt-,` | Accordion layout |
+| `alt--/=` | Resize |
 
 ## Password Management
 

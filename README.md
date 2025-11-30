@@ -54,13 +54,14 @@ Brewfile.security            # LuLu, Malwarebytes, BlockBlock
 Brewfile.mas                 # Mac App Store apps (Pandan)
 
 dotfiles/
+├── CLAUDE.md                # Claude Code root config
 ├── aerospace/aerospace.toml # Aerospace window manager config
 ├── ghostty/config           # Ghostty terminal config
 ├── gitconfig
 ├── npmrc
 ├── starship.toml
 ├── cursor/extensions.txt    # Cursor extension list
-├── fish/functions/          # 20 Fish functions
+├── fish/functions/          # Fish functions (23)
 └── ssh/config.template
 ```
 
@@ -86,6 +87,9 @@ dotfiles/
 | `b`            | brew maintenance (update, upgrade, cleanup) |
 | `r [dir]`      | cd to ~/r/ reproductions                    |
 | `cloner <url>` | clone to ~/r/ + open in cursor              |
+| `gsearch`      | Gemini web search                           |
+| `gfetch`       | Gemini web fetch (multi-URL)                |
+| `cx`           | Codex code review (GPT 5.1)                 |
 
 ## Security Tools
 

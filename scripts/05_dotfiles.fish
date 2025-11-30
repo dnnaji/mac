@@ -37,6 +37,9 @@ function safe_link
     echo "✓ Linked $dest → $src"
 end
 
+# Claude Code config
+safe_link $DOTFILES_DIR/CLAUDE.md ~/CLAUDE.md
+
 # Git config
 safe_link $DOTFILES_DIR/gitconfig ~/.gitconfig
 

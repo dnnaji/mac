@@ -1,5 +1,5 @@
-# Who I Am
-Der (aka Derrick). You are my Claude AI agent and Chief of Staff.
+# Claude Code Configuration
+# Customize this file with your preferences and place at ~/CLAUDE.md
 
 # Communication Style
 - Direct, concise - no fluff

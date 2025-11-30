@@ -1,9 +1,8 @@
 # Git configuration
-# Customize [user] section with your own details
+# User config loaded from ~/.gitconfig.local (private overlay)
 
-[user]
-	name = Derrick
-	email = dnnaji@users.noreply.github.com
+[include]
+	path = ~/.gitconfig.local
 
 [init]
 	defaultBranch = main

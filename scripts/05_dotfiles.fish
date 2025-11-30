@@ -97,5 +97,61 @@ else
     echo "· No conf.d files to install"
 end
 
+# =============================================================================
+# Private Overlay (optional - cloned from mac-private repo)
+# =============================================================================
+set -l PRIVATE_DIR (realpath "$SCRIPT_DIR/../private" 2>/dev/null)
+
+if test -d "$PRIVATE_DIR"
+    echo ""
+    echo "=== Private Overlay ==="
+    echo "Source: $PRIVATE_DIR"
+
+    # Private git config (user, signingkey, etc.)
+    if test -f "$PRIVATE_DIR/gitconfig.local"
+        cp "$PRIVATE_DIR/gitconfig.local" ~/.gitconfig.local
+        echo "✓ gitconfig.local"
+    end
+
+    # Private SSH config
+    if test -f "$PRIVATE_DIR/ssh/config"
+        mkdir -p ~/.ssh
+        cp "$PRIVATE_DIR/ssh/config" ~/.ssh/config
+        chmod 600 ~/.ssh/config
+        echo "✓ ssh/config"
+    end
+
+    # Private CLAUDE.md (full version with personal workflow)
+    if test -f "$PRIVATE_DIR/CLAUDE.md"
+        cp "$PRIVATE_DIR/CLAUDE.md" ~/CLAUDE.md
+        echo "✓ CLAUDE.md (private version)"
+    end
+
+    # Private fish functions
+    if test -d "$PRIVATE_DIR/fish/functions"
+        for func in "$PRIVATE_DIR"/fish/functions/*.fish
+            if test -f "$func"
+                set -l fname (basename "$func")
+                cp "$func" ~/.config/fish/functions/$fname
+                echo "✓ $fname (private)"
+            end
+        end
+    end
+
+    # Private fish conf.d
+    if test -d "$PRIVATE_DIR/fish/conf.d"
+        for conf in "$PRIVATE_DIR"/fish/conf.d/*.fish
+            if test -f "$conf"
+                set -l fname (basename "$conf")
+                cp "$conf" ~/.config/fish/conf.d/$fname
+                echo "✓ $fname (private)"
+            end
+        end
+    end
+else
+    echo ""
+    echo "· No private overlay found (clone mac-private into private/)"
+end
+
 echo ""
 echo "Dotfiles installation complete."

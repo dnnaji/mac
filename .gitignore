@@ -1,0 +1,10 @@
+# Private overlay (separate repo cloned here)
+private/
+
+# Local/secret files
+*.local
+*.secret
+*.override
+
+# macOS
+.DS_Store

@@ -178,6 +178,24 @@ i3-style tiling window manager. Config: `dotfiles/aerospace/aerospace.toml`
 - Gaps: 8px inner/outer by default
 - Workspaces are virtual desktops (not tied to displays)
 
+## Private Overlay (Optional)
+
+For personal configs (git identity, SSH hosts, API keys), use a separate private repo:
+
+```fish
+# Clone private overlay into ignored directory
+git clone git@github.com:YOUR_USER/mac-private.git ~/i/mac/private
+```
+
+The `05_dotfiles.fish` script automatically loads from `private/` if present:
+- `gitconfig.local` → `~/.gitconfig.local` (user identity, signing key)
+- `ssh/config` → `~/.ssh/config` (host aliases)
+- `CLAUDE.md` → `~/CLAUDE.md` (full workflow preferences)
+- `fish/functions/` → private fish functions
+- `fish/conf.d/` → private fish config
+
+See [mac-private template](https://github.com/dnnaji/mac-private) for structure.
+
 ## Security Tools
 
 After `brew bundle --file=Brewfile.security`:

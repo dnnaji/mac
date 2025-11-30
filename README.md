@@ -1,5 +1,7 @@
 # Mac Bootstrap
 
+> **WARNING**: Automating macOS setup with AI tools can be dangerous. This project executes shell scripts with elevated privileges (sudo), modifies system preferences via `defaults write`, installs software, and symlinks dotfiles. **Proceed at your own risk.** Review all scripts before execution.
+
 Claude Code-driven macOS setup. All scripts are Fish shell, idempotent, and agent-runnable.
 
 ## Quick Start (New Mac)

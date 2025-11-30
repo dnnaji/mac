@@ -16,12 +16,21 @@ echo ""
 
 # Update Homebrew
 echo "Updating Homebrew..."
-brew update
+brew update; or begin
+    echo "ERROR: brew update failed"
+    exit 1
+end
+
+# Verify Brewfile exists
+if not test -f "$ROOT_DIR/Brewfile"
+    echo "ERROR: Brewfile not found at $ROOT_DIR/Brewfile"
+    exit 1
+end
 
 # Install from Brewfile
 echo ""
 echo "Installing from Brewfile..."
-brew bundle --file=$ROOT_DIR/Brewfile --no-lock
+brew bundle --file="$ROOT_DIR/Brewfile" --no-lock
 
 # Verify key tools
 echo ""

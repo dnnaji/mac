@@ -2,43 +2,98 @@
 # 06_macos_defaults.fish - Configure macOS system preferences
 # Idempotent: safe to run multiple times
 # Many changes require logout/restart to take effect
+#
+# Usage:
+#   ./06_macos_defaults.fish          # Interactive mode (prompts for Dock, Keyboard, Security)
+#   ./06_macos_defaults.fish --yes    # Auto-yes all prompts (for CI/automation)
+#   ./06_macos_defaults.fish -y       # Same as --yes
+
+# =============================================================================
+# Argument Parsing
+# =============================================================================
+argparse 'y/yes' 'h/help' -- $argv
+or exit 1
+
+if set -q _flag_help
+    echo "Usage: 06_macos_defaults.fish [-y|--yes] [-h|--help]"
+    echo ""
+    echo "Options:"
+    echo "  -y, --yes    Skip confirmation prompts (assume yes)"
+    echo "  -h, --help   Show this help message"
+    echo ""
+    echo "Sections with prompts: Dock, Keyboard, Security"
+    echo "Auto-applied sections: Finder, Desktop, Trackpad, Screenshots, Misc"
+    exit 0
+end
+
+# =============================================================================
+# Helper Functions
+# =============================================================================
+
+# Confirm prompt with automation support
+# Returns 0 (true) for yes, 1 (false) for no
+function confirm -a prompt_text
+    # Auto-yes if --yes flag OR CI/NONINTERACTIVE env
+    if set -q _flag_yes; or set -q CI; or set -q NONINTERACTIVE
+        echo "$prompt_text [Y/n] (auto-yes)"
+        return 0
+    end
+
+    read -l -P "$prompt_text [Y/n] " response
+    # Default to yes if empty, or if starts with y/Y
+    test -z "$response"; or string match -qi 'y*' $response
+end
+
+# =============================================================================
+# Sudo Check (fail-fast)
+# =============================================================================
+# Security section requires sudo - verify it's available before starting
+if not sudo -n true 2>/dev/null
+    echo "Error: sudo credentials required but not cached."
+    echo "Run 'sudo -v' first, then re-run this script."
+    exit 1
+end
 
 echo "=== Configuring macOS Defaults ==="
 echo ""
 
 # =============================================================================
-# Dock
+# Dock (prompted)
 # =============================================================================
-echo "Configuring Dock..."
+if confirm "Configure Dock (auto-hide, icon size)?"
+    echo "Configuring Dock..."
 
-# Auto-hide the Dock
-defaults write com.apple.dock autohide -bool true
+    # Auto-hide the Dock
+    defaults write com.apple.dock autohide -bool true
 
-# Remove the auto-hide delay
-defaults write com.apple.dock autohide-delay -float 0
+    # Remove the auto-hide delay
+    defaults write com.apple.dock autohide-delay -float 0
 
-# Speed up the animation when hiding/showing the Dock
-defaults write com.apple.dock autohide-time-modifier -float 0.3
+    # Speed up the animation when hiding/showing the Dock
+    defaults write com.apple.dock autohide-time-modifier -float 0.3
 
-# Don't animate opening applications
-defaults write com.apple.dock launchanim -bool false
+    # Don't animate opening applications
+    defaults write com.apple.dock launchanim -bool false
 
-# Don't show recent applications
-defaults write com.apple.dock show-recents -bool false
+    # Don't show recent applications
+    defaults write com.apple.dock show-recents -bool false
 
-# Make Dock icons of hidden applications translucent
-defaults write com.apple.dock showhidden -bool true
+    # Make Dock icons of hidden applications translucent
+    defaults write com.apple.dock showhidden -bool true
 
-# Set Dock icon size
-defaults write com.apple.dock tilesize -int 48
+    # Set Dock icon size
+    defaults write com.apple.dock tilesize -int 48
 
-# Minimize windows into their application's icon
-defaults write com.apple.dock minimize-to-application -bool true
+    # Minimize windows into their application's icon
+    defaults write com.apple.dock minimize-to-application -bool true
 
-echo "✓ Dock configured"
+    echo "✓ Dock configured"
+else
+    echo "· Skipping Dock"
+end
 
 # =============================================================================
-# Finder
+# Finder (auto-applied)
 # =============================================================================
 echo "Configuring Finder..."
 
@@ -76,7 +131,7 @@ defaults write com.apple.finder DisableAllAnimations -bool true
 echo "✓ Finder configured"
 
 # =============================================================================
-# Desktop & Stage Manager
+# Desktop & Stage Manager (auto-applied)
 # =============================================================================
 echo "Configuring Desktop..."
 
@@ -89,35 +144,39 @@ defaults write com.apple.WindowManager EnableStandardClickToShowDesktop -bool fa
 echo "✓ Desktop configured"
 
 # =============================================================================
-# Keyboard
+# Keyboard (prompted)
 # =============================================================================
-echo "Configuring Keyboard..."
+if confirm "Configure Keyboard (fast repeat, no autocorrect)?"
+    echo "Configuring Keyboard..."
 
-# Fast key repeat rate
-defaults write NSGlobalDomain KeyRepeat -int 2
+    # Fast key repeat rate
+    defaults write NSGlobalDomain KeyRepeat -int 2
 
-# Short delay until key repeat
-defaults write NSGlobalDomain InitialKeyRepeat -int 15
+    # Short delay until key repeat
+    defaults write NSGlobalDomain InitialKeyRepeat -int 15
 
-# Disable auto-correct
-defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
+    # Disable auto-correct
+    defaults write NSGlobalDomain NSAutomaticSpellingCorrectionEnabled -bool false
 
-# Disable auto-capitalization
-defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
+    # Disable auto-capitalization
+    defaults write NSGlobalDomain NSAutomaticCapitalizationEnabled -bool false
 
-# Disable smart dashes
-defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
+    # Disable smart dashes
+    defaults write NSGlobalDomain NSAutomaticDashSubstitutionEnabled -bool false
 
-# Disable smart quotes
-defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
+    # Disable smart quotes
+    defaults write NSGlobalDomain NSAutomaticQuoteSubstitutionEnabled -bool false
 
-# Disable auto period substitution
-defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+    # Disable auto period substitution
+    defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 
-echo "✓ Keyboard configured"
+    echo "✓ Keyboard configured"
+else
+    echo "· Skipping Keyboard"
+end
 
 # =============================================================================
-# Trackpad
+# Trackpad (auto-applied)
 # =============================================================================
 echo "Configuring Trackpad..."
 
@@ -132,7 +191,7 @@ defaults -currentHost write NSGlobalDomain com.apple.mouse.tapBehavior -int 1
 echo "✓ Trackpad configured"
 
 # =============================================================================
-# Screenshots
+# Screenshots (auto-applied)
 # =============================================================================
 echo "Configuring Screenshots..."
 
@@ -150,7 +209,40 @@ defaults write com.apple.screencapture disable-shadow -bool true
 echo "✓ Screenshots configured (saving to ~/Pictures/Screenshots)"
 
 # =============================================================================
-# Misc
+# Security (prompted, requires sudo)
+# =============================================================================
+if confirm "Configure Security (firewall, guest account)?"
+    echo "Configuring Security..."
+
+    # Disable guest account
+    sudo defaults write /Library/Preferences/com.apple.loginwindow GuestEnabled -bool false
+
+    # Enable firewall
+    sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setglobalstate on
+
+    # Enable stealth mode (no response to pings/port scans)
+    sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setstealthmode on
+
+    # Enable firewall logging
+    sudo /usr/libexec/ApplicationFirewall/socketfilterfw --setloggingmode on
+
+    # Disable Safari auto-open "safe" downloads
+    defaults write com.apple.Safari AutoOpenSafeDownloads -bool false
+
+    # Secure keyboard entry in Terminal (prevents keyloggers)
+    defaults write com.apple.Terminal SecureKeyboardEntry -bool true
+
+    # Require password immediately after sleep/screensaver
+    defaults write com.apple.screensaver askForPassword -int 1
+    defaults write com.apple.screensaver askForPasswordDelay -int 0
+
+    echo "✓ Security configured"
+else
+    echo "· Skipping Security"
+end
+
+# =============================================================================
+# Misc (auto-applied)
 # =============================================================================
 echo "Configuring Misc settings..."
 

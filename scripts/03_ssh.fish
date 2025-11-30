@@ -27,7 +27,7 @@ if not test -f $KEY_PATH
         exit 1
     end
 
-    ssh-keygen -t ed25519 -C $ssh_email -f $KEY_PATH
+    ssh-keygen -t ed25519 -C "$ssh_email" -f "$KEY_PATH"
     echo ""
     echo "✓ SSH key generated"
 else

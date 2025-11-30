@@ -11,7 +11,7 @@ mkdir -p ~/.config/fish/conf.d ~/.config/fish/functions ~/.config/fish/completio
 # Install Fisher plugin manager if missing
 if not functions -q fisher
     echo "Installing Fisher plugin manager..."
-    curl -sL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
+    curl -fsSL https://raw.githubusercontent.com/jorgebucaran/fisher/main/functions/fisher.fish | source
     fisher install jorgebucaran/fisher
     echo "✓ Fisher installed"
 else
@@ -25,7 +25,9 @@ echo "=== Installing Fish Plugins ==="
 set -l plugins \
     "PatrickF1/fzf.fish" \
     "jorgebucaran/autopair.fish" \
-    "meaningful-ooo/sponge"
+    "meaningful-ooo/sponge" \
+    "franciscolourenco/done" \
+    "nickeb96/puffer-fish"
 
 for plugin in $plugins
     set -l plugin_name (string split "/" $plugin)[-1]

@@ -32,6 +32,26 @@ echo ""
 echo "Installing from Brewfile..."
 brew bundle --file="$ROOT_DIR/Brewfile"
 
+# Check for orphaned packages (not in Brewfile)
+set -l orphans (brew bundle cleanup --file="$ROOT_DIR/Brewfile" 2>/dev/null)
+if test -n "$orphans"
+    echo ""
+    echo "=== Orphaned Packages ==="
+    echo "These packages are installed but not in Brewfile:"
+    echo "$orphans"
+    echo ""
+    if command -q gum
+        if gum confirm "Remove these packages?"
+            brew bundle cleanup --file="$ROOT_DIR/Brewfile" --force
+            echo "✓ Orphaned packages removed"
+        else
+            echo "· Skipped cleanup"
+        end
+    else
+        echo "Run 'brew bundle cleanup --force' to remove manually"
+    end
+end
+
 # Verify key tools
 echo ""
 echo "=== Verification ==="

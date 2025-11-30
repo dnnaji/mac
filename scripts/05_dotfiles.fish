@@ -72,12 +72,8 @@ if test -d "$DOTFILES_DIR/fish/functions"
             set -l fname (basename "$func")
             set -l dest ~/.config/fish/functions/$fname
 
-            if test -f "$dest"
-                echo "· $fname exists, skipping"
-            else
-                cp "$func" "$dest"
-                echo "✓ Copied $fname"
-            end
+            cp "$func" "$dest"
+            echo "✓ $fname"
         end
     end
 else
@@ -93,12 +89,8 @@ if test -d "$DOTFILES_DIR/fish/conf.d"
             set -l fname (basename "$conf")
             set -l dest ~/.config/fish/conf.d/$fname
 
-            if test -f "$dest"
-                echo "· $fname exists, skipping"
-            else
-                cp "$conf" "$dest"
-                echo "✓ Copied $fname"
-            end
+            cp "$conf" "$dest"
+            echo "✓ $fname"
         end
     end
 else

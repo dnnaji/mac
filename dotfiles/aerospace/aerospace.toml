@@ -93,3 +93,8 @@ run = 'layout floating'
 if.app-id = 'com.apple.finder'
 if.window-title-regex-substring = '(Copy|Move|Delete|Info|Connecting)'
 run = 'layout floating'
+
+# LuLu firewall alerts
+[[on-window-detected]]
+if.app-id = 'com.objective-see.lulu.app'
+run = 'layout floating'

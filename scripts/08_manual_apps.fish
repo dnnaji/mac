@@ -25,6 +25,29 @@ else
     end
 end
 
+# Wispr Flow - AI Voice Dictation
+# No Homebrew cask; download from official site
+# https://wisprflow.ai
+if test -d "/Applications/Wispr Flow.app"
+    echo "· Wispr Flow already installed"
+else
+    echo "Installing Wispr Flow (AI voice dictation)..."
+    curl -L -o /tmp/WisprFlow.dmg "https://dl.wisprflow.ai/mac-apple/latest"
+    hdiutil attach /tmp/WisprFlow.dmg -quiet
+    # Volume name includes version, find it dynamically
+    set -l vol (ls -d /Volumes/Flow-* 2>/dev/null | head -1)
+    if test -n "$vol" -a -d "$vol/Wispr Flow.app"
+        cp -R "$vol/Wispr Flow.app" /Applications/
+        hdiutil detach "$vol" -quiet
+        rm /tmp/WisprFlow.dmg
+        echo "✓ Wispr Flow installed"
+    else
+        echo "ERROR: Could not find Wispr Flow in mounted volume"
+        hdiutil detach "$vol" -quiet 2>/dev/null
+    end
+end
+
 echo ""
 echo "=== Post-Install Steps ==="
 echo "Ice: System Settings → Privacy & Security → Accessibility → Enable Ice"
+echo "Wispr Flow: Grant Microphone & Accessibility permissions"

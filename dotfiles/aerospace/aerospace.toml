@@ -3,6 +3,9 @@
 
 start-at-login = true
 
+# Focus callback - stabilizes mouse/focus behavior
+on-focus-changed = ['move-mouse window-lazy-center']
+
 # Gaps
 [gaps]
 inner.horizontal = 8
@@ -33,9 +36,9 @@ alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 
-# Workspace Cycle (for gestures)
-alt-left = 'workspace prev'
-alt-right = 'workspace next'
+# Workspace Cycle (ctrl-alt to avoid conflict with text navigation)
+ctrl-alt-left = 'workspace prev'
+ctrl-alt-right = 'workspace next'
 
 # Move to workspace
 alt-shift-1 = 'move-node-to-workspace 1'
@@ -68,30 +71,25 @@ alt-equal = 'resize smart +50'
 # Auto-route Apps to Workspaces
 # =============================================================================
 
-# Workspace 1: ChatGPT + Atlas
-[[on-window-detected]]
-if.app-id = 'com.openai.chat'
-run = 'move-node-to-workspace 1'
-
-[[on-window-detected]]
-if.app-id = 'com.openai.atlas.web.helper.plugin'
-run = 'move-node-to-workspace 1'
-
-# Workspace 2: Ghostty
-[[on-window-detected]]
-if.app-id = 'com.mitchellh.ghostty'
-run = 'move-node-to-workspace 2'
-
-# Workspace 3: Cursor + Antigravity
-[[on-window-detected]]
-if.app-id = 'com.todesktop.230313mzl4w4u92'
-run = 'move-node-to-workspace 3'
-
-[[on-window-detected]]
-if.app-id = 'com.google.antigravity'
-run = 'move-node-to-workspace 3'
-
-# Workspace 4: Repo Prompt
+# Repo Prompt - reference tool, keep pinned on secondary monitor
 [[on-window-detected]]
 if.app-id = 'com.pvncher.repoprompt'
 run = 'move-node-to-workspace 4'
+
+# =============================================================================
+# Floating Rules - dialogs/settings shouldn't tile
+# =============================================================================
+
+[[on-window-detected]]
+if.app-id = 'com.apple.systempreferences'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.SystemPreferences'
+run = 'layout floating'
+
+# Finder dialogs (Copy, Move, Info windows)
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+if.window-title-regex-substring = '(Copy|Move|Delete|Info|Connecting)'
+run = 'layout floating'

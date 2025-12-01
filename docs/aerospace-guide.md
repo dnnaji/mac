@@ -12,6 +12,10 @@ Aerospace workspaces are **independent** from macOS Spaces. They don't sync.
 
 **Best practice**: Use one macOS Space per monitor, let Aerospace handle all window organization.
 
+## Focus Behavior
+
+The config uses `on-focus-changed = ['move-mouse window-lazy-center']` to move the mouse to the focused window. This reduces jarring context switches and makes focus more predictable.
+
 ## Keybindings
 
 ### Window Focus (vim-style)
@@ -35,6 +39,7 @@ Aerospace workspaces are **independent** from macOS Spaces. They don't sync.
 |-----|--------|
 | `alt-1` to `alt-5` | Switch to workspace |
 | `alt-shift-1` to `alt-shift-5` | Move window to workspace |
+| `ctrl-alt-left/right` | Cycle prev/next workspace |
 
 ### Layout
 | Key | Action |
@@ -52,10 +57,8 @@ Workspaces are pinned to monitors:
 
 | Workspace | Monitor | Purpose |
 |-----------|---------|---------|
-| 1 | main | ChatGPT, Atlas |
-| 2 | main | Ghostty (terminal) |
-| 3 | main | Cursor, Antigravity |
-| 4 | secondary | Repo Prompt |
+| 1-3 | main | General use |
+| 4 | secondary | Repo Prompt (auto-routed) |
 | 5 | secondary | Free |
 
 ## macOS Gestures
@@ -111,15 +114,10 @@ aerospace reload-config
 
 ## Auto-Routing Apps
 
-Apps automatically move to their assigned workspace on launch:
+Only Repo Prompt is auto-routed (pinned to secondary monitor as a reference tool). Other apps open on your current workspace.
 
 | App | Workspace |
 |-----|-----------|
-| ChatGPT | 1 |
-| Atlas | 1 |
-| Ghostty | 2 |
-| Cursor | 3 |
-| Antigravity | 3 |
 | Repo Prompt | 4 |
 
 To add more, edit `aerospace.toml`:

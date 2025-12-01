@@ -209,12 +209,15 @@ Brewfile.mas                 # Mac App Store
 
 i3-style tiling. Config: `dotfiles/aerospace/aerospace.toml`
 
+**Required**: Disable "Displays have separate Spaces" in System Settings → Desktop & Dock (requires logout).
+
 | Keys | Action |
 |------|--------|
 | `⌥ h/j/k/l` | Focus window |
 | `⌥⇧ h/j/k/l` | Move window |
 | `⌥ 1-5` | Switch workspace |
 | `⌥⇧ 1-5` | Move to workspace |
+| `⌃⌥ ←/→` | Cycle workspaces |
 | `⌥ f` | Fullscreen |
 | `⌥ /` | Toggle split direction |
 | `⌥⇧ Space` | Toggle floating |

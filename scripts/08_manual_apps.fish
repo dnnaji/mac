@@ -34,7 +34,6 @@ else
     echo "Installing Wispr Flow (AI voice dictation)..."
     curl -L -o /tmp/WisprFlow.dmg "https://dl.wisprflow.ai/mac-apple/latest"
     hdiutil attach /tmp/WisprFlow.dmg -quiet
-    # Volume name includes version, find it dynamically
     set -l vol (ls -d /Volumes/Flow-* 2>/dev/null | head -1)
     if test -n "$vol" -a -d "$vol/Wispr Flow.app"
         cp -R "$vol/Wispr Flow.app" /Applications/

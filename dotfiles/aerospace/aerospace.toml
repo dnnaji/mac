@@ -3,7 +3,7 @@
 
 start-at-login = true
 
-# Focus callback - stabilizes mouse/focus behavior
+# Focus follows mouse to window center
 on-focus-changed = ['move-mouse window-lazy-center']
 
 # Gaps
@@ -36,7 +36,7 @@ alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
 alt-5 = 'workspace 5'
 
-# Workspace Cycle (ctrl-alt to avoid conflict with text navigation)
+# Workspace Cycle
 ctrl-alt-left = 'workspace prev'
 ctrl-alt-right = 'workspace next'
 
@@ -71,7 +71,7 @@ alt-equal = 'resize smart +50'
 # Auto-route Apps to Workspaces
 # =============================================================================
 
-# Repo Prompt - reference tool, keep pinned on secondary monitor
+# Workspace 4: Repo Prompt
 [[on-window-detected]]
 if.app-id = 'com.pvncher.repoprompt'
 run = 'move-node-to-workspace 4'
@@ -88,7 +88,7 @@ run = 'layout floating'
 if.app-id = 'com.apple.SystemPreferences'
 run = 'layout floating'
 
-# Finder dialogs (Copy, Move, Info windows)
+# Finder dialogs
 [[on-window-detected]]
 if.app-id = 'com.apple.finder'
 if.window-title-regex-substring = '(Copy|Move|Delete|Info|Connecting)'

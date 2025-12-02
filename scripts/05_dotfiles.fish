@@ -119,12 +119,10 @@ if test -d "$PRIVATE_DIR"
         echo "✓ ssh/config"
     end
 
-    # Private CLAUDE.md (symlink to ~/i/private)
+    # Private CLAUDE.md
     if test -f "$PRIVATE_DIR/CLAUDE.md"
         ln -sf "$PRIVATE_DIR/CLAUDE.md" ~/CLAUDE.md
         echo "✓ CLAUDE.md → $PRIVATE_DIR/CLAUDE.md"
-    else
-        echo "· $PRIVATE_DIR/CLAUDE.md not found (optional)"
     end
 
     # Private fish functions

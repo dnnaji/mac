@@ -44,9 +44,6 @@ function safe_link --argument-names src dest
     echo "✓ Linked $dest → $src"
 end
 
-# Claude Code config
-safe_link "$DOTFILES_DIR/CLAUDE.md" ~/CLAUDE.md
-
 # Git config
 safe_link "$DOTFILES_DIR/gitconfig" ~/.gitconfig
 
@@ -122,10 +119,12 @@ if test -d "$PRIVATE_DIR"
         echo "✓ ssh/config"
     end
 
-    # Private CLAUDE.md (full version with personal workflow)
+    # Private CLAUDE.md (symlink to ~/i/private)
     if test -f "$PRIVATE_DIR/CLAUDE.md"
-        cp "$PRIVATE_DIR/CLAUDE.md" ~/CLAUDE.md
-        echo "✓ CLAUDE.md (private version)"
+        ln -sf "$PRIVATE_DIR/CLAUDE.md" ~/CLAUDE.md
+        echo "✓ CLAUDE.md → $PRIVATE_DIR/CLAUDE.md"
+    else
+        echo "· $PRIVATE_DIR/CLAUDE.md not found (optional)"
     end
 
     # Private fish functions

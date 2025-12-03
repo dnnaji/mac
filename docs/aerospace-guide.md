@@ -14,7 +14,7 @@ Aerospace workspaces are **independent** from macOS Spaces. They don't sync.
 
 ## Focus Behavior
 
-The config uses `on-focus-changed = ['move-mouse window-lazy-center']` to move the mouse to the focused window. This reduces jarring context switches and makes focus more predictable.
+The config uses `on-focus-changed = ['move-mouse window-lazy-center']` to move the mouse to the focused window.
 
 ## Keybindings
 
@@ -114,7 +114,7 @@ aerospace reload-config
 
 ## Auto-Routing Apps
 
-Only Repo Prompt is auto-routed (pinned to secondary monitor as a reference tool). Other apps open on your current workspace.
+Only Repo Prompt is auto-routed. Other apps open on your current workspace.
 
 | App | Workspace |
 |-----|-----------|
